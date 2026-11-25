@@ -29,6 +29,11 @@ def validate(text):
         return False
     if not text.strip():
         return False
+    # Reject leading/trailing whitespace: a one-line gate entry must not
+    # carry invisible padding (the gate only forbids whitespace-only text,
+    # so this hardens beyond it).
+    if text != text.strip():
+        return False
     if "\n" in text or "\r" in text:
         return False
     # No control characters (the gate wants clean one-line UTF-8 text).
